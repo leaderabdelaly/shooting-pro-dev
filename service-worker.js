@@ -1,19 +1,15 @@
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open("shehaby-shooting-pro").then(cache => {
-      return cache.addAll([
+const CACHE = "shehaby-shooting-pro-v1";
+
+self.addEventListener("install", e => {
+  e.waitUntil(
+    caches.open(CACHE).then(c =>
+      c.addAll([
         "./",
         "./index.html",
-        "./app.js"
-      ]);
-    })
-  );
-});
-
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+        "./style.css",
+        "./app.js",
+        "./lang.json"
+      ])
+    )
   );
 });
