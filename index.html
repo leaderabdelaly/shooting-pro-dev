@@ -1,31 +1,39 @@
-<button id="undoBtn">تراجع</button>
-<button id="langToggle">EN</button>
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#000000">
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Shehaby Shooting Pro</title>
-</head>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
 
-  <div id="root"></div>
+  <header>
+    <h1 id="appTitle">Shehaby Shooting Pro</h1>
 
-  <!-- React -->
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <button id="langToggle">EN</button>
+  </header>
 
-  <!-- App -->
+  <main>
+    <label id="uploadLabel" class="file-label">
+      اختر صورة الهدف
+      <input type="file" id="imageInput" accept="image/*">
+    </label>
+
+    <canvas id="targetCanvas"></canvas>
+
+    <div class="controls">
+      <button id="undoBtn">تراجع</button>
+      <button id="analyzeBtn">بدء تحليل الأخطاء</button>
+    </div>
+
+    <div id="analysisResult"></div>
+  </main>
+
   <script src="./app.js"></script>
-
 </body>
 </html>
-
-
-
