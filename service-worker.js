@@ -1,16 +1,12 @@
-const CACHE_NAME = "shehaby-shooting-pro-v1";
-
-const FILES_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./app.js",
-  "./style.css",
-  "./manifest.json"
-];
-
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+    caches.open("shehaby-shooting-pro").then(cache => {
+      return cache.addAll([
+        "./",
+        "./index.html",
+        "./app.js"
+      ]);
+    })
   );
 });
 
@@ -21,8 +17,3 @@ self.addEventListener("fetch", event => {
     })
   );
 });
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js");
-  });
-}
