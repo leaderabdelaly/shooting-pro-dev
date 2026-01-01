@@ -1,8 +1,11 @@
 ﻿const { useState, useRef, useEffect } = React;
 
 function App() {
+  let history = [];
   const [image, setImage] = useState(null);
   const [center, setCenter] = useState(null);
+  history.push(JSON.parse(JSON.stringify(shots)));
+
   const [shots, setShots] = useState([]);
   const [result, setResult] = useState(null);
   const [manualCenter, setManualCenter] = useState(false);
@@ -198,4 +201,5 @@ const styles = {
 };
 
 ReactDOM.createRoot(document.getElementById("root"))
+
   .render(React.createElement(App));
