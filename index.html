@@ -1,39 +1,14 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <title>Shehaby Shooting Pro</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="manifest" href="./manifest.json">
-  <link rel="stylesheet" href="./style.css">
-</head>
-
+<!DOCTYPE html><html lang="ar"><head>  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  <title>Shooting Pro</title>
+  <link rel="manifest" href="manifest.json">  <link rel="stylesheet" href="style.css"></head>
 <body>
-
-  <header>
-    <h1 id="appTitle">Shehaby Shooting Pro</h1>
-
-    <button id="langToggle">EN</button>
-  </header>
-
-  <main>
-    <label id="uploadLabel" class="file-label">
-      اختر صورة الهدف
-      <input type="file" id="imageInput" accept="image/*">
-    </label>
-
-    <canvas id="targetCanvas"></canvas>
-
-    <div class="controls">
-      <button id="undoBtn">تراجع</button>
-      <button id="analyzeBtn">بدء تحليل الأخطاء</button>
-    </div>
-
-    <div id="analysisResult"></div>
-  </main>
-
-  <script src="./app.js"></script>
+<header>  <h1>Shooting Pro</h1>  <div id="planLabel">Free Version</div></header>
+<main>
+  <canvas id="targetCanvas" width="300" height="300"></canvas>
+  <button id="clearBtn">مسح الطلقات</button>
+  <div id="result"></div>
+  <div id="upgradeBox" class="hidden">    <h2>النسخة المدفوعة</h2>    <p>      النسخة المجانية تسمح بـ 10 طلقات فقط        ولا تعرض طريقة علاج الخطأ        <br><br>      Pro version removes limits        and shows correction methods    </p>
+    <button onclick="activatePro()">تفعيل النسخة الاحترافية</button>  </div>
+</main>
+<script src="lang.json" type="application/json"></script><script src="app.js"></script>
 </body>
 </html>
