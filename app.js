@@ -1,17 +1,24 @@
 ﻿const { useState, useRef, useEffect } = React;
-document.getElementById("undoBtn").onclick = () => {
-  if (history.length > 0) {
-    shots = history.pop();
-    renderShots();
-  }
-};
+let lang = {};
+let currentLang = "ar";
 
+fetch("./lang.json")
+  .then(r => r.json())
+  .then(data => {
+    lang = data;
+    applyLang();
+  });
+
+function t(key) {
+  return lang[currentLang][key] || key;
+}
+
+function applyLang() {
+  document.getElementById("undoBtn").innerText = t("undo");
+}
 function App() {
-  let history = [];
   const [image, setImage] = useState(null);
   const [center, setCenter] = useState(null);
-  history.push(JSON.parse(JSON.stringify(shots)));
-
   const [shots, setShots] = useState([]);
   const [result, setResult] = useState(null);
   const [manualCenter, setManualCenter] = useState(false);
@@ -20,9 +27,9 @@ function App() {
 
   const errorMap = {
     "فوق": {
-      ar: "دفع المعصم للأعلى أثناء خروج الطلقة",
-      en: "Breaking wrist up",
-      fix: "ثبات المعصم والحفاظ على استقامة السحب"
+     ar: "دفع المعصم لأعلى لحظة خروج الطلقة أو خفض الرأس",
+      en: "pushing wrist up or the head lay down",
+      fix: "الحفاظ على الرأس والمعصم ثابتين"
     },
     "فوق يمين": {
       ar: "الضغط بكعب اليد مع توقع الارتداد",
@@ -40,8 +47,8 @@ function App() {
       fix: "فصل حركة الزناد عن القبضة"
     },
     "تحت": {
-      ar: "دفع المعصم للأسفل أو انخفاض الرأس",
-      en: "Breaking wrist down or drooping head",
+      ar: "خغض المعصم للأسفل لحظة خروج الطلقة أو رفع الرأس",
+      en: "Breaking wrist down or raising head",
       fix: "الحفاظ على الرأس والمعصم ثابتين"
     },
     "تحت شمال": {
@@ -207,6 +214,4 @@ const styles = {
 };
 
 ReactDOM.createRoot(document.getElementById("root"))
-
   .render(React.createElement(App));
-
