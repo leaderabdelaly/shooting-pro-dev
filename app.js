@@ -1,6 +1,21 @@
-﻿const { useState, useRef, useEffect } = React;
-let lang = {};
-let currentLang = "ar";
+let userPlan = localStorage.getItem("plan") || "free";
+
+  const analysis = analyzeShots(shots);
+  showAnalysis(analysis);
+};
+
+window.enablePro = () => {
+  localStorage.setItem("plan", "pro");
+  userPlan = "pro";
+};
+// Make it obvious when enablePro is invoked from the console
+window.enablePro = (() => {
+  const _orig = window.enablePro;
+  return () => {
+    _orig();
+    console.log("enablePro()");
+  };
+})();
 
 fetch("./lang.json")
   .then(r => r.json())
@@ -9,12 +24,33 @@ fetch("./lang.json")
     applyLang();
   });
 
+function canAnalyze() {
+  if (userPlan === "free" && shots.length > 10) {
+    alert("Upgrade to Pro");
+    return false;
+  }
+  return true;
+}
+
+function showAnalysis(analysis) {
+  const dominant = analysis[0];
+
+  const resultBox = document.getElementById("analysisResult");
+  resultBox.innerHTML = `
+    <h3>${t("dominantError")}</h3>
+    <p>${dominant.ar} / ${dominant.en}</p>
+  `;
+}
+
 function t(key) {
   return lang[currentLang][key] || key;
 }
 
 function applyLang() {
-  document.getElementById("undoBtn").innerText = t("undo");
+  document.title = t("title");
+
+  const resultTitle = document.getElementById("resultTitle");
+  if (resultTitle) resultTitle.innerText = t("result");
 }
 function App() {
   const [image, setImage] = useState(null);
@@ -215,3 +251,42 @@ const styles = {
 
 ReactDOM.createRoot(document.getElementById("root"))
   .render(React.createElement(App));
+window.addEventListener("DOMContentLoaded", () => {
+
+  const langBtn = document.getElementById("langToggle");
+  const analyzeBtn = document.getElementById("analyzeBtn");
+  const undoBtn = document.getElementById("undoBtn");
+
+  // حماية
+  if (!langBtn || !analyzeBtn || !undoBtn) {
+    console.warn("Buttons not found");
+    return;
+  }
+
+  // تغيير اللغة
+  langBtn.onclick = () => {
+    currentLang = currentLang === "ar" ? "en" : "ar";
+    langBtn.innerText = currentLang === "ar" ? "EN" : "AR";
+    applyLang();
+  };
+
+  // بدء التحليل
+  analyzeBtn.onclick = () => {
+    if (!shots || shots.length === 0) {
+      alert(currentLang === "ar" ? "لم يتم تسجيل طلقات" : "No shots recorded");
+      return;
+    }
+
+    const analysis = analyzeShots(shots);
+    showAnalysis(analysis);
+  };
+
+  // تراجع
+  undoBtn.onclick = () => {
+    if (history.length > 0) {
+      shots = history.pop();
+      renderShots();
+    }
+  };
+
+});
