@@ -1,18 +1,110 @@
 {
-  "ar": {
-    "title": "Shehaby Shooting Pro",
-    "upload": "اختر صورة الهدف",
-    "undo": "تراجع",
-    "analyze": "بدء تحليل الأخطاء",
-    "noShots": "لم يتم تسجيل طلقات",
-    "result": "الخطأ الغالب"
+  "meta": {
+    "app_name": {
+      "ar": "Shehaby Shooting Pro",
+      "en": "Shehaby Shooting Pro"
+    },
+    "free_notice": {
+      "ar": "النسخة المجانية تسمح بـ 10 طلقات فقط ولا تعرض طريقة علاج الخطأ",
+      "en": "Free version allows only 10 shots and does not show correction methods"
+    }
   },
-  "en": {
-    "title": "Shehaby Shooting Pro",
-    "upload": "Upload Target Image",
-    "undo": "Undo",
-    "analyze": "Start Error Analysis",
-    "noShots": "No shots recorded",
-    "result": "Dominant Error"
+
+  "errors": {
+    "left": {
+      "direction": "left",
+      "label": {
+        "ar": "سحب الزناد لليسار",
+        "en": "Trigger pulled to the left"
+      },
+      "fix": {
+        "ar": "اضغط الزناد تدريجياً بإصبع السبابة دون شد جانبي",
+        "en": "Press the trigger smoothly without lateral pressure"
+      }
+    },
+
+    "right": {
+      "direction": "right",
+      "label": {
+        "ar": "سحب الزناد لليمين",
+        "en": "Trigger pulled to the right"
+      },
+      "fix": {
+        "ar": "خفف ضغط الإبهام وثبّت القبضة",
+        "en": "Relax thumb pressure and stabilize the grip"
+      }
+    },
+
+    "up": {
+      "direction": "up",
+      "label": {
+        "ar": "رفع السلاح قبل خروج الطلقة",
+        "en": "Anticipating recoil (pushing up)"
+      },
+      "fix": {
+        "ar": "ثبّت المعصم ولا تسبق خروج الطلقة",
+        "en": "Keep wrist stable and do not anticipate the shot"
+      }
+    },
+
+    "down": {
+      "direction": "down",
+      "label": {
+        "ar": "دفع السلاح لأسفل أثناء الضغط",
+        "en": "Pushing the gun downward"
+      },
+      "fix": {
+        "ar": "دع الطلقة تخرج بدون مقاومة أو شد",
+        "en": "Allow the shot to break without resistance"
+      }
+    },
+
+    "up_left": {
+      "direction": "up_left",
+      "label": {
+        "ar": "رفع السلاح مع سحب الزناد لليسار",
+        "en": "Anticipation with left trigger pull"
+      },
+      "fix": {
+        "ar": "ثبّت المعصم واضبط اتجاه ضغط السبابة",
+        "en": "Stabilize the wrist and correct finger pressure direction"
+      }
+    },
+
+    "up_right": {
+      "direction": "up_right",
+      "label": {
+        "ar": "رفع السلاح مع سحب الزناد لليمين",
+        "en": "Anticipation with right trigger pull"
+      },
+      "fix": {
+        "ar": "خفف ضغط القبضة مع تحكم أدق في الزناد",
+        "en": "Relax grip pressure and refine trigger control"
+      }
+    },
+
+    "down_left": {
+      "direction": "down_left",
+      "label": {
+        "ar": "دفع السلاح لأسفل مع سحب الزناد لليسار",
+        "en": "Pushing down with left trigger pull"
+      },
+      "fix": {
+        "ar": "وازن القبضة وتأكد من ضغط مستقيم على الزناد",
+        "en": "Balance the grip and ensure straight trigger press"
+      }
+    },
+
+    "down_right": {
+      "direction": "down_right",
+      "label": {
+        "ar": "دفع السلاح لأسفل مع سحب الزناد لليمين",
+        "en": "Pushing down with right trigger pull"
+      },
+      "fix": {
+        "ar": "خفف شد القبضة واضبط وضع الإصبع",
+        "en": "Reduce grip tension and adjust finger position"
+      }
+    }
   }
 }
