@@ -47,7 +47,9 @@ function t(key) {
 }
 
 function applyLang() {
-  document.title = t("title");
+  document.getElementById("analyzeBtn").innerText = t("analyze");
+  document.getElementById("undoBtn").innerText = t("undo");
+}
 
   const resultTitle = document.getElementById("resultTitle");
   if (resultTitle) resultTitle.innerText = t("result");
@@ -290,3 +292,4 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 
 });
+
