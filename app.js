@@ -1,4 +1,10 @@
 ﻿const { useState, useRef, useEffect } = React;
+document.getElementById("undoBtn").onclick = () => {
+  if (history.length > 0) {
+    shots = history.pop();
+    renderShots();
+  }
+};
 
 function App() {
   let history = [];
@@ -203,3 +209,4 @@ const styles = {
 ReactDOM.createRoot(document.getElementById("root"))
 
   .render(React.createElement(App));
+
