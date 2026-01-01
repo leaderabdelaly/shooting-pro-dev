@@ -93,3 +93,6 @@ document.getElementById("analyzeBtn").onclick = () => {
   document.getElementById("analysisResult").innerText =
     t("result") + " : Grip / Trigger";
 };
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js");
+}
