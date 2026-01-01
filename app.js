@@ -1,16 +1,6 @@
-﻿let userPlan = localStorage.getItem("plan") || "free";
-
-document.getElementById("analyzeBtn").onclick = () => {
-  if (!canAnalyze()) return;
-
-  const analysis = analyzeShots(shots);
-  showAnalysis(analysis);
-};
-
-window.enablePro = () => {
-  localStorage.setItem("plan", "pro");
-  userPlan = "pro";
-};
+﻿const { useState, useRef, useEffect } = React;
+let lang = {};
+let currentLang = "ar";
 
 fetch("./lang.json")
   .then(r => r.json())
@@ -19,37 +9,12 @@ fetch("./lang.json")
     applyLang();
   });
 
-function canAnalyze() {
-  if (userPlan === "free" && shots.length > 10) {
-    alert("Upgrade to Pro");
-    return false;
-  }
-  return true;
-}
-
-function showAnalysis(analysis) {
-  const dominant = analysis[0];
-
-  const resultBox = document.getElementById("analysisResult");
-  resultBox.innerHTML = `
-    <h3>${t("dominantError")}</h3>
-    <p>${dominant.ar} / ${dominant.en}</p>
-  `;
-}
-
 function t(key) {
   return lang[currentLang][key] || key;
 }
 
 function applyLang() {
-  document.title = t("title");
-
   document.getElementById("undoBtn").innerText = t("undo");
-  document.getElementById("analyzeBtn").innerText = t("analyze");
-  document.getElementById("uploadLabel").innerText = t("upload");
-
-  const resultTitle = document.getElementById("resultTitle");
-  if (resultTitle) resultTitle.innerText = t("result");
 }
 function App() {
   const [image, setImage] = useState(null);
