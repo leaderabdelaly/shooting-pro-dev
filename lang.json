@@ -1,24 +1,18 @@
-﻿{
+{
   "ar": {
     "title": "Shehaby Shooting Pro",
     "upload": "اختر صورة الهدف",
-    "manualCenter": "تحديد المركز يدويًا",
-    "analyze": "ابدأ التحليل",
     "undo": "تراجع",
-    "shots": "عدد الطلقات",
-    "result": "نتيجة التحليل",
-    "dominantError": "الخطأ الغالب",
-    "language": "اللغة"
+    "analyze": "بدء تحليل الأخطاء",
+    "noShots": "لم يتم تسجيل طلقات",
+    "result": "الخطأ الغالب"
   },
   "en": {
     "title": "Shehaby Shooting Pro",
     "upload": "Upload Target Image",
-    "manualCenter": "Set Center Manually",
-    "analyze": "Start Analysis",
     "undo": "Undo",
-    "shots": "Shots Count",
-    "result": "Analysis Result",
-    "dominantError": "Dominant Error",
-    "language": "Language"
+    "analyze": "Start Error Analysis",
+    "noShots": "No shots recorded",
+    "result": "Dominant Error"
   }
 }
