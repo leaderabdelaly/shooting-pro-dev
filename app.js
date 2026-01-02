@@ -1,3 +1,31 @@
+﻿const { useState, useRef, useEffect } = React;
+let lang = {};
+let currentLang = "ar";
+
+fetch("./lang.json")
+  .then(r => r.json())
+  .then(data => {
+    lang = data;
+    applyLang();
+  });
+
+function t(key) {
+  return lang[currentLang][key] || key;
+}
+
+function applyLang() {
+  document.getElementById("undoBtn").innerText = t("undo");
+}
+function App() {
+  const [image, setImage] = useState(null);
+  const [center, setCenter] = useState(null);
+  const [shots, setShots] = useState([]);
+  const [result, setResult] = useState(null);
+  const [manualCenter, setManualCenter] = useState(false);
+
+  const imgRef = useRef(null);
+
+  const errorMap = {
 const canvas = document.getElementById("targetCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -72,3 +100,4 @@ function activatePro() {
   localStorage.setItem("shooting_pro", "yes");
   location.reload();
 }
+
