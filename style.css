@@ -1,46 +1,31 @@
 body {
-  font-family: sans-serif;
-  text-align: center;
+  font-family: Arial, sans-serif;
   background: #f5f5f5;
   margin: 0;
+  padding: 0;
+  text-align: center;
 }
 
 header {
   background: #111;
-  color: #fff;
+  color: white;
   padding: 10px;
-}
-
-#planLabel {
-  font-size: 14px;
-  opacity: 0.8;
-}
-
-canvas {
-  background: #fff;
-  border: 2px solid #000;
-  margin: 20px auto;
-  display: block;
 }
 
 button {
   padding: 10px 15px;
-  margin: 10px;
+  margin: 5px;
   font-size: 16px;
+  cursor: pointer;
 }
 
-#result {
-  margin-top: 15px;
-  font-size: 16px;
-}
-
-.hidden {
-  display: none;
-}
-
-#upgradeBox {
-  background: #fff;
+canvas {
   border: 2px solid #000;
-  margin: 20px;
-  padding: 15px;
+  margin-top: 10px;
+  max-width: 100%;
+}
+
+#analysisText {
+  margin-top: 15px;
+  font-weight: bold;
 }
