@@ -1,18 +1,40 @@
-<!DOCTYPE html><html lang="ar"><head>  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  <title>Shooting Pro</title>
-  <link rel="manifest" href="manifest.json">  <link rel="stylesheet" href="style.css"></head>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Shehaby Shooting Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
-<header>  <h1>Shooting Pro</h1>  <div id="planLabel">النسخة التجريبية</div></header>
-<main>
-  <canvas id="targetCanvas" width="300" height="300"></canvas>
-  <button id="clearBtn">اختار 10 طلقات من الهدف</button>
-  <div id="result"></div>
-  <div id="upgradeBox" class="hidden">    <h2>النسخة المدفوعة</h2>    <p>      النسخة المجانية تسمح بـ 10 طلقات فقط        دون عرض طريقة علاج الخطأ        <br><br>      النسخة الاحترافية تسمح بعدد غير محدد من الطلقات        and تظهر طرق علاج الأخطاء    </p>
-    <button onclick="activatePro()">تفعيل النسخة الاحترافية</button>  </div>
-</main>
-<script src="lang.json" type="application/json"></script><script src="app.js"></script>
+
+<header>
+  <h1 id="appTitle">Shehaby Shooting Pro</h1>
+
+  <button id="langToggle">EN</button>
+</header>
+
+<section id="uploadSection">
+  <input type="file" id="imageInput" accept="image/*">
+</section>
+
+<section id="canvasSection">
+  <canvas id="targetCanvas"></canvas>
+</section>
+
+<section id="controls">
+  <button id="setCenterBtn">تحديد مركز الهدف</button>
+  <button id="undoBtn">تراجع</button>
+  <button id="analyzeBtn">بدء تحليل الأخطاء</button>
+</section>
+
+<section id="result">
+  <p id="analysisText"></p>
+</section>
+
+<script src="app.js"></script>
 </body>
 </html>
-
-
-
-
