@@ -8,12 +8,46 @@ let mode = "shot";
 let lang = "ar";
 
 const MAX_FREE_SHOTS = 10;
-const IS_PRO = false; // لاحقًا تتحول true عند الاشتراك
+const IS_PRO = false; // تتحول true لاحقًا
 
-fetch("lang.json").then(r => r.json()).then(data => window.LANG = data);
+let LANG = null;
+
+fetch("lang.json")
+  .then(r => r.json())
+  .then(data => {
+    LANG = data;
+    applyLanguage();
+  });
+
+/* ================== اللغة ================== */
+
+document.getElementById("langToggle").onclick = () => {
+  lang = lang === "ar" ? "en" : "ar";
+  document.getElementById("langToggle").innerText = lang === "ar" ? "EN" : "AR";
+  applyLanguage();
+};
+
+function applyLanguage() {
+  if (!LANG) return;
+
+  document.documentElement.lang = lang;
+
+  document.getElementById("setCenterBtn").innerText =
+    LANG.ui.setCenter[lang];
+
+  document.getElementById("undoBtn").innerText =
+    LANG.ui.undo[lang];
+
+  document.getElementById("analyzeBtn").innerText =
+    LANG.ui.analyze[lang];
+}
+
+/* ================== تحميل الصورة ================== */
 
 document.getElementById("imageInput").addEventListener("change", e => {
   let file = e.target.files[0];
+  if (!file) return;
+
   img.src = URL.createObjectURL(file);
   img.onload = () => {
     canvas.width = img.width;
@@ -22,13 +56,17 @@ document.getElementById("imageInput").addEventListener("change", e => {
   };
 });
 
+/* ================== أزرار التحكم ================== */
+
 document.getElementById("setCenterBtn").onclick = () => {
   mode = "center";
 };
 
 document.getElementById("undoBtn").onclick = () => {
-  shots.pop();
-  redraw();
+  if (shots.length > 0) {
+    shots.pop();
+    redraw();
+  }
 };
 
 canvas.addEventListener("click", e => {
@@ -41,7 +79,7 @@ canvas.addEventListener("click", e => {
     mode = "shot";
   } else {
     if (!IS_PRO && shots.length >= MAX_FREE_SHOTS) {
-      alert(window.LANG.free.limit[lang]);
+      alert(LANG.free.limit[lang]);
       return;
     }
     shots.push({ x, y });
@@ -49,11 +87,12 @@ canvas.addEventListener("click", e => {
   redraw();
 });
 
-document.getElementById("analyzeBtn").onclick = analyze;
+/* ================== الرسم ================== */
 
 function redraw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, 0, 0);
+
+  if (img.src) ctx.drawImage(img, 0, 0);
 
   if (center) {
     ctx.fillStyle = "red";
@@ -67,9 +106,13 @@ function redraw() {
     ctx.beginPath();
     ctx.arc(s.x, s.y, 4, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillText(i + 1, s.x + 5, s.y);
+    ctx.fillText(i + 1, s.x + 6, s.y);
   });
 }
+
+/* ================== التحليل ================== */
+
+document.getElementById("analyzeBtn").onclick = analyze;
 
 function analyze() {
   if (!center || shots.length === 0) return;
@@ -83,14 +126,16 @@ function analyze() {
     if (s.y > center.y + 10) counts.down++;
   });
 
-  let error = Object.keys(counts).reduce((a,b)=>counts[a]>counts[b]?a:b);
-  let txt = window.LANG.errors[error][lang];
+  let error = Object.keys(counts)
+    .reduce((a,b)=>counts[a] > counts[b] ? a : b);
+
+  let text = LANG.errors[error][lang];
 
   if (IS_PRO) {
-    txt += " — " + window.LANG.errors[error]["fix_"+lang];
+    text += " — " + LANG.errors[error]["fix_" + lang];
   } else {
-    txt += " — " + window.LANG.free.no_fix[lang];
+    text += " — " + LANG.free.no_fix[lang];
   }
 
-  document.getElementById("analysisText").innerText = txt;
+  document.getElementById("analysisText").innerText = text;
 }
