@@ -1,3 +1,5 @@
+/* ================== الإعدادات ================== */
+
 let canvas = document.getElementById("targetCanvas");
 let ctx = canvas.getContext("2d");
 
@@ -8,18 +10,20 @@ let mode = "shot";
 let lang = "ar";
 
 const MAX_FREE_SHOTS = 10;
-const IS_PRO = false; // تتحول true لاحقًا
+const IS_PRO = false; // تتحول true مع الاشتراك
 
 let LANG = null;
 
+/* ================== تحميل اللغة ================== */
+
 fetch("lang.json")
-  .then(r => r.json())
+  .then(res => res.json())
   .then(data => {
     LANG = data;
     applyLanguage();
   });
 
-/* ================== اللغة ================== */
+/* ================== تبديل اللغة ================== */
 
 document.getElementById("langToggle").onclick = () => {
   lang = lang === "ar" ? "en" : "ar";
@@ -42,14 +46,39 @@ function applyLanguage() {
     LANG.ui.analyze[lang];
 }
 
-/* ================== تحميل الصورة ================== */
+/* ================== تحميل صورة الهدف ================== */
 
 document.getElementById("imageInput").addEventListener("change", e => {
-  let file = e.target.files[0];
+  const file = e.target.files[0];
   if (!file) return;
 
+  img = new Image();
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    redraw();
+  };
   img.src = URL.createObjectURL(file);
-  img.onload = () canvas.addEventListener("click", e => {
+});
+
+/* ================== أزرار التحكم ================== */
+
+document.getElementById("setCenterBtn").onclick = () => {
+  mode = "center";
+};
+
+document.getElementById("undoBtn").onclick = () => {
+  if (shots.length > 0) {
+    shots.pop();
+    redraw();
+  }
+};
+
+/* ================== الضغط على الهدف (موبايل + ويب) ================== */
+
+canvas.addEventListener("click", e => {
+  if (!img.src) return;
+
   const rect = canvas.getBoundingClientRect();
 
   const scaleX = canvas.width / rect.width;
@@ -72,43 +101,14 @@ document.getElementById("imageInput").addEventListener("change", e => {
   redraw();
 });
 
-/* ================== أزرار التحكم ================== */
-
-document.getElementById("setCenterBtn").onclick = () => {
-  mode = "center";
-};
-
-document.getElementById("undoBtn").onclick = () => {
-  if (shots.length > 0) {
-    shots.pop();
-    redraw();
-  }
-};
-
-canvas.addEventListener("click", e => {
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-
-  if (mode === "center") {
-    center = { x, y };
-    mode = "shot";
-  } else {
-    if (!IS_PRO && shots.length >= MAX_FREE_SHOTS) {
-      alert(LANG.free.limit[lang]);
-      return;
-    }
-    shots.push({ x, y });
-  }
-  redraw();
-});
-
 /* ================== الرسم ================== */
 
 function redraw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (img.src) ctx.drawImage(img, 0, 0);
+  if (img.complete && img.src) {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  }
 
   if (center) {
     ctx.fillStyle = "red";
@@ -142,17 +142,16 @@ function analyze() {
     if (s.y > center.y + 10) counts.down++;
   });
 
-  let error = Object.keys(counts)
-    .reduce((a,b)=>counts[a] > counts[b] ? a : b);
+  const error = Object.keys(counts)
+    .reduce((a,b) => counts[a] > counts[b] ? a : b);
 
-  let text = LANG.errors[error][lang];
+  let result = LANG.errors[error][lang];
 
   if (IS_PRO) {
-    text += " — " + LANG.errors[error]["fix_" + lang];
+    result += " — " + LANG.errors[error]["fix_" + lang];
   } else {
-    text += " — " + LANG.free.no_fix[lang];
+    result += " — " + LANG.free.no_fix[lang];
   }
 
-  document.getElementById("analysisText").innerText = text;
+  document.getElementById("analysisText").innerText = result;
 }
-
