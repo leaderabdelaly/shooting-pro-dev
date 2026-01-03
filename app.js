@@ -49,11 +49,27 @@ document.getElementById("imageInput").addEventListener("change", e => {
   if (!file) return;
 
   img.src = URL.createObjectURL(file);
-  img.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    redraw();
-  };
+  img.onload = () canvas.addEventListener("click", e => {
+  const rect = canvas.getBoundingClientRect();
+
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+
+  const x = (e.clientX - rect.left) * scaleX;
+  const y = (e.clientY - rect.top) * scaleY;
+
+  if (mode === "center") {
+    center = { x, y };
+    mode = "shot";
+  } else {
+    if (!IS_PRO && shots.length >= MAX_FREE_SHOTS) {
+      alert(LANG.free.limit[lang]);
+      return;
+    }
+    shots.push({ x, y });
+  }
+
+  redraw();
 });
 
 /* ================== أزرار التحكم ================== */
@@ -139,3 +155,4 @@ function analyze() {
 
   document.getElementById("analysisText").innerText = text;
 }
+
